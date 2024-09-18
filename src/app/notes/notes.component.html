@@ -1,0 +1,7 @@
+<h2 class="notesTitle">Create Notes</h2>
+<div class="noteStyleRoot" *ngFor="let noteItem of notes; index as idx">
+    <input type="text" ngModel [(ngModel)]="noteItem.title" placeholder="Название заметки">
+    <textarea ngModel [(ngModel)]="noteItem.text" placeholder="Введите текст заметки" style="width: 100%; margin-top: 10px;"></textarea>
+    <button (click)="deleteNote(idx)">Удалить заметку</button>
+</div>
+<button (click)="addNote()">Добавить заметку</button>
