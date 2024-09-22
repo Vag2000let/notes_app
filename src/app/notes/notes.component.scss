@@ -1,13 +1,17 @@
-.notesTitle {
+.notesTitleRed {
     font-size: 25px;
     text-align: center;
-    color: red;
+    color: rgb(255, 0, 0);
+    border: solid 1px;
+    border-radius: 15px;
+    padding: 10px;
 }
 
-.noteStyleRoot {
-    list-style: none;
-    border: 2px solid gray;
-    border-radius: 5px;
+.notesTitleGreen{
+    font-size: 25px;
+    text-align: center;
+    color: rgb(115, 208, 99);
+    border: solid 1px;
+    border-radius: 15px;
     padding: 10px;
-    margin-bottom: 10px;
 }
