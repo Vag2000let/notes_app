@@ -1,38 +1,58 @@
-import { Component, EventEmitter, Input, Output} from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Note } from '../interfaces';
-import { FormsModule } from '@angular/forms';
-import { NoteComponent } from "../note/note.component";
+import { Component, inject, Input } from '@angular/core'
+import { AsyncPipe, CommonModule, NgForOf } from '@angular/common'
+import { FormsModule } from '@angular/forms'
+import { NoteComponent } from './components/note/note.component'
+import { NotesApiService, NotesDataService } from '../service'
+import { Note } from '../interfaces'
+import { Observable } from 'rxjs'
+import { HttpClient } from '@angular/common/http'
 
 @Component({
   selector: 'app-notes',
   standalone: true,
   imports: [CommonModule, FormsModule, NoteComponent],
   templateUrl: './notes.component.html',
-  styleUrl: './notes.component.scss'
+  styleUrls: ['./notes.component.scss', './components/note/note.component.scss']
 })
 export class NotesComponent {
-  notes: Note[] = [];
-  nodeId: number | null = null
+  notesApiService = inject(NotesApiService)
+  notesDataService = inject(NotesDataService)
 
-  addNote() {
+  notes: Note[] = []
+
+  // Получаем данные из NoteComponent
+  @Input() noteObj!: Note
+
+  ngOnInit() {
+    this.notesApiService.getNotes().subscribe((notes) => {
+      console.log('notes', notes)
+
+      this.notes = notes
+    })
+  }
+
+  addNote(note: any) {
+    this.notes = [...this.notes, note]
+  }
+
+  deleteNote(idx: number) {
+    console.log('idx', idx)
+    this.notes = this.notes.filter((_, index) => index !== idx)
+
+    this.notesApiService.deleteNote(idx).subscribe((notes) => {
+      console.log('deleteNote', notes)
+    })
+  }
+
+  saveNote(note: Note, idx: number) {
     const newNote = {
-      title: '',
-      text: ''  
+      ...note,
+      id: idx
     }
+    console.log('newNote', newNote)
 
-    this.notes = [...this.notes, newNote]
-    console.log('this.notes', this.notes);
-  }
-
-  deleteNote(noteId: number) {
-    console.log('nodeId', noteId);
-    this.notes = this.notes.filter((_, idx) => idx !== noteId)
-  }
-
-  getNoteFromNoteComponent(noteData: Note) {
-    console.log('noteData', noteData);
-    this.notes = [...this.notes, noteData]
-    // this.notes.push(noteData)
+    this.notesApiService.createNote(newNote).subscribe((note) => {
+      console.log('saveNoteFromNoteComponent', note)
+    })
   }
 }

@@ -1,18 +1,25 @@
-@if (!notes.length) {
-    <h2 class="notesTitleRed">Create Notes</h2>
+@if (notes.length) {
+  <div class="notesRoot">
+    <div class="notesTitleGreen">My Notes</div>
+    <div class="noteStyleRoot" *ngFor="let note of notes; index as idx">
+      <input type="text" [(ngModel)]="note.title" placeholder="Название" />
+      <textarea
+        [(ngModel)]="note.text"
+        placeholder="Введите текст"
+        style="width: 100%; margin-top: 10px"
+      ></textarea>
+      <!-- <app-note
+        (noteObj)="addNote(note)"
+        (eventClickSaveNote)="saveNote($event, idx)"
+        (eventClickDeleteNote)="deleteNote(idx)"
+      ></app-note> -->
+      <div class="noteBtn">
+        <button (click)="saveNote(note, idx)">Сохранить</button>
+        <button (click)="deleteNote(idx)">Удалить</button>
+      </div>
+    </div>
+  </div>
 } @else {
-    <h2 class="notesTitleGreen">My Notes</h2>
+  <h2 class="notesTitleRed">Create Notes</h2>
 }
-<app-note
-    *ngFor="let noteItem of notes; index as idx"
-    (noteObj)="getNoteFromNoteComponent($event)"
-    (eventClick)="deleteNote(idx)"
-    [notes]="notes"
-    [noteId]="idx"
->
-</app-note>
-<button
-    (click)="addNote()"
->
-    Добавить заметку
-</button>
+<button class="noteBtn" (click)="addNote($event)">Добавить заметку</button>

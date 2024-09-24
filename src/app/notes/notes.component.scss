@@ -1,17 +1,24 @@
 .notesTitleRed {
-    font-size: 25px;
-    text-align: center;
-    color: rgb(255, 0, 0);
-    border: solid 1px;
-    border-radius: 15px;
-    padding: 10px;
+  font-size: 25px;
+  text-align: center;
+  color: rgb(255, 0, 0);
+  border: solid 1px;
+  border-radius: 15px;
+  padding: 10px;
 }
 
-.notesTitleGreen{
-    font-size: 25px;
-    text-align: center;
-    color: rgb(115, 208, 99);
-    border: solid 1px;
-    border-radius: 15px;
-    padding: 10px;
+.notesTitleGreen {
+  font-size: 25px;
+  text-align: center;
+  color: rgb(115, 208, 99);
+  border: solid 1px;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.notesRoot {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 15px;
 }
